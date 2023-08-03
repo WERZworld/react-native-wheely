@@ -4,6 +4,7 @@ import styles from './WheelPicker.styles';
 
 interface ItemProps {
   textStyle: StyleProp<TextStyle>;
+  secondaryTextStyle: StyleProp<TextStyle>;
   style: StyleProp<ViewStyle>;
   option: string | null;
   height: number;
@@ -25,7 +26,8 @@ const WheelPickerItem: React.FC<ItemProps> = ({
   currentScrollIndex,
   opacityFunction,
   rotationFunction,
-  scaleFunction
+  scaleFunction,
+  secondaryTextStyle,
 }) => {
   const relativeScrollIndex = Animated.subtract(index, currentScrollIndex);
 
@@ -112,6 +114,7 @@ const WheelPickerItem: React.FC<ItemProps> = ({
       return range;
     })(),
   });
+  const [period,...time]:string[] = option.split(" ")
 
   return (
     <Animated.View
@@ -121,7 +124,7 @@ const WheelPickerItem: React.FC<ItemProps> = ({
         {  height, opacity, transform: [{ translateY }, { rotateX }, { scale }]},
       ]}
     >
-      <Text style={textStyle}>{option}</Text>
+      <Text style={textStyle}>{period} {time ? <Text style={secondaryTextStyle}>{time.join(" ")}</Text> : null}</Text>
     </Animated.View>
   );
 };

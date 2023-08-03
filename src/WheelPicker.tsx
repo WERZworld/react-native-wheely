@@ -20,6 +20,7 @@ interface Props {
   onChange: (index: number) => void;
   selectedIndicatorStyle?: StyleProp<ViewStyle>;
   itemTextStyle?: TextStyle;
+  secondaryTextStyle?: TextStyle;
   itemStyle?: ViewStyle;
   itemHeight?: number;
   containerStyle?: ViewStyle;
@@ -40,6 +41,7 @@ const WheelPicker: React.FC<Props> = ({
   containerStyle = {},
   itemStyle = {},
   itemTextStyle = {},
+  secondaryTextStyle = {},
   itemHeight = 40,
   scaleFunction = (x: number) => 1.0 ** x,
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
@@ -139,6 +141,7 @@ const WheelPicker: React.FC<Props> = ({
         )}
         onMomentumScrollEnd={handleMomentumScrollEnd}
         snapToOffsets={offsets}
+        nestedScrollEnabled={true}
         decelerationRate={decelerationRate}
         initialScrollIndex={selectedIndex}
         getItemLayout={(data, index) => ({
@@ -155,6 +158,7 @@ const WheelPicker: React.FC<Props> = ({
             option={option}
             style={itemStyle}
             textStyle={itemTextStyle}
+            secondaryTextStyle={secondaryTextStyle}
             height={itemHeight}
             currentScrollIndex={currentScrollIndex}
             scaleFunction={scaleFunction}
