@@ -6,7 +6,7 @@ interface ItemProps {
   textStyle: StyleProp<TextStyle>;
   secondaryTextStyle: StyleProp<TextStyle>;
   style: StyleProp<ViewStyle>;
-  option: string | null;
+  option: string;
   height: number;
   index: number;
   currentScrollIndex: Animated.AnimatedAddition;
@@ -114,7 +114,7 @@ const WheelPickerItem: React.FC<ItemProps> = ({
       return range;
     })(),
   });
-  const [period,...time]:string[] | undefined = option?.split(" ")
+  const [period,...time]:string[] = option?.split(" ")
 
   return (
     <Animated.View
