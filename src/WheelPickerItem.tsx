@@ -114,7 +114,7 @@ const WheelPickerItem: React.FC<ItemProps> = ({
       return range;
     })(),
   });
-  const [period,...time]:string[] = option.split(" ")
+  const [period,...time]:string[] = option?.split(" ")
 
   return (
     <Animated.View
