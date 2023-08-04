@@ -92,7 +92,11 @@ const WheelPicker: React.FC<Props> = ({
     if (last > itemHeight / 2) index++;
 
     if (index !== selectedIndex) {
-      onChange(index);
+      if (maxIndex && index > maxIndex) {
+        onChange(maxIndex);
+      } else {
+        onChange(index);
+      }
     }
   };
 
