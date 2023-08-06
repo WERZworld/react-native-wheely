@@ -29,7 +29,6 @@ interface Props {
   rotationFunction?: (x: number) => number;
   opacityFunction?: (x: number) => number;
   visibleRest?: number;
-  maxIndex?: number;
   decelerationRate?: 'normal' | 'fast' | number;
   flatListProps?: Omit<FlatListProps<string | null>, 'data' | 'renderItem'>;
 }
@@ -48,7 +47,6 @@ const WheelPicker: React.FC<Props> = ({
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
   opacityFunction = (x: number) => Math.pow(1 / 3, x),
   visibleRest = 2,
-  maxIndex,
   decelerationRate = 'fast',
   containerProps = {},
   flatListProps = {},
@@ -58,13 +56,13 @@ const WheelPicker: React.FC<Props> = ({
 
   const containerHeight = (1 + visibleRest * 2) * itemHeight;
   const paddedOptions = useMemo(() => {
-    const array: (string | null)[] = [...options.slice(0, maxIndex)];
+    const array: (string | null)[] = [...options];
     for (let i = 0; i < visibleRest; i++) {
       array.unshift(null);
       array.push(null);
     }
     return array;
-  }, [options, visibleRest, maxIndex]);
+  }, [options, visibleRest]);
 
   const offsets = useMemo(
     () => [...Array(paddedOptions.length)].map((x, i) => i * itemHeight),
