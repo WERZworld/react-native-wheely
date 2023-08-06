@@ -153,45 +153,25 @@ const WheelPicker: React.FC<Props> = ({
         })}
         data={paddedOptions}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item: option, index }) => (
-          <>
-            {typeof maxIndex === 'number' ? (
-              index > maxIndex ? (
-                <></>
-              ) : (
-                <WheelPickerItem
-                  key={`option-${index}`}
-                  index={index}
-                  option={option}
-                  style={itemStyle}
-                  textStyle={itemTextStyle}
-                  secondaryTextStyle={secondaryTextStyle}
-                  height={itemHeight}
-                  currentScrollIndex={currentScrollIndex}
-                  scaleFunction={scaleFunction}
-                  rotationFunction={rotationFunction}
-                  opacityFunction={opacityFunction}
-                  visibleRest={visibleRest}
-                />
-              )
-            ) : (
-              <WheelPickerItem
-                key={`option-${index}`}
-                index={index}
-                option={option}
-                style={itemStyle}
-                textStyle={itemTextStyle}
-                secondaryTextStyle={secondaryTextStyle}
-                height={itemHeight}
-                currentScrollIndex={currentScrollIndex}
-                scaleFunction={scaleFunction}
-                rotationFunction={rotationFunction}
-                opacityFunction={opacityFunction}
-                visibleRest={visibleRest}
-              />
-            )}
-          </>
-        )}
+        renderItem={({ item: option, index }) => {
+          if (maxIndex && index > maxIndex) return <></>;
+          return (
+            <WheelPickerItem
+              key={`option-${index}`}
+              index={index}
+              option={option}
+              style={itemStyle}
+              textStyle={itemTextStyle}
+              secondaryTextStyle={secondaryTextStyle}
+              height={itemHeight}
+              currentScrollIndex={currentScrollIndex}
+              scaleFunction={scaleFunction}
+              rotationFunction={rotationFunction}
+              opacityFunction={opacityFunction}
+              visibleRest={visibleRest}
+            />
+          );
+        }}
       />
     </View>
   );
