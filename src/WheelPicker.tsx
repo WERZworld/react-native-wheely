@@ -44,11 +44,11 @@ const WheelPicker: React.FC<Props> = ({
   itemTextStyle = {},
   secondaryTextStyle = {},
   itemHeight = 40,
-  maxIndex,
   scaleFunction = (x: number) => 1.0 ** x,
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
   opacityFunction = (x: number) => Math.pow(1 / 3, x),
   visibleRest = 2,
+  maxIndex,
   decelerationRate = 'fast',
   containerProps = {},
   flatListProps = {},
@@ -58,13 +58,13 @@ const WheelPicker: React.FC<Props> = ({
 
   const containerHeight = (1 + visibleRest * 2) * itemHeight;
   const paddedOptions = useMemo(() => {
-    const array: (string | null)[] = [...options];
+    const array: (string | null)[] = [...options.slice(0, maxIndex)];
     for (let i = 0; i < visibleRest; i++) {
       array.unshift(null);
       array.push(null);
     }
     return array;
-  }, [options, visibleRest]);
+  }, [options, visibleRest, maxIndex]);
 
   const offsets = useMemo(
     () => [...Array(paddedOptions.length)].map((x, i) => i * itemHeight),
@@ -153,25 +153,22 @@ const WheelPicker: React.FC<Props> = ({
         })}
         data={paddedOptions}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item: option, index }) => {
-          if (maxIndex && index > maxIndex) return <></>;
-          return (
-            <WheelPickerItem
-              key={`option-${index}`}
-              index={index}
-              option={option}
-              style={itemStyle}
-              textStyle={itemTextStyle}
-              secondaryTextStyle={secondaryTextStyle}
-              height={itemHeight}
-              currentScrollIndex={currentScrollIndex}
-              scaleFunction={scaleFunction}
-              rotationFunction={rotationFunction}
-              opacityFunction={opacityFunction}
-              visibleRest={visibleRest}
-            />
-          );
-        }}
+        renderItem={({ item: option, index }) => (
+          <WheelPickerItem
+            key={`option-${index}`}
+            index={index}
+            option={option}
+            style={itemStyle}
+            textStyle={itemTextStyle}
+            secondaryTextStyle={secondaryTextStyle}
+            height={itemHeight}
+            currentScrollIndex={currentScrollIndex}
+            scaleFunction={scaleFunction}
+            rotationFunction={rotationFunction}
+            opacityFunction={opacityFunction}
+            visibleRest={visibleRest}
+          />
+        )}
       />
     </View>
   );
