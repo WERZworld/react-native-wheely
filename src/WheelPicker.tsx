@@ -29,6 +29,7 @@ interface Props {
   rotationFunction?: (x: number) => number;
   opacityFunction?: (x: number) => number;
   visibleRest?: number;
+  maxIndex?: number;
   decelerationRate?: 'normal' | 'fast' | number;
   flatListProps?: Omit<FlatListProps<string | null>, 'data' | 'renderItem'>;
 }
@@ -43,6 +44,7 @@ const WheelPicker: React.FC<Props> = ({
   itemTextStyle = {},
   secondaryTextStyle = {},
   itemHeight = 40,
+  maxIndex,
   scaleFunction = (x: number) => 1.0 ** x,
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
   opacityFunction = (x: number) => Math.pow(1 / 3, x),
@@ -152,20 +154,43 @@ const WheelPicker: React.FC<Props> = ({
         data={paddedOptions}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item: option, index }) => (
-          <WheelPickerItem
-            key={`option-${index}`}
-            index={index}
-            option={option}
-            style={itemStyle}
-            textStyle={itemTextStyle}
-            secondaryTextStyle={secondaryTextStyle}
-            height={itemHeight}
-            currentScrollIndex={currentScrollIndex}
-            scaleFunction={scaleFunction}
-            rotationFunction={rotationFunction}
-            opacityFunction={opacityFunction}
-            visibleRest={visibleRest}
-          />
+          <>
+            {typeof maxIndex === 'number' ? (
+              index > maxIndex ? (
+                <></>
+              ) : (
+                <WheelPickerItem
+                  key={`option-${index}`}
+                  index={index}
+                  option={option}
+                  style={itemStyle}
+                  textStyle={itemTextStyle}
+                  secondaryTextStyle={secondaryTextStyle}
+                  height={itemHeight}
+                  currentScrollIndex={currentScrollIndex}
+                  scaleFunction={scaleFunction}
+                  rotationFunction={rotationFunction}
+                  opacityFunction={opacityFunction}
+                  visibleRest={visibleRest}
+                />
+              )
+            ) : (
+              <WheelPickerItem
+                key={`option-${index}`}
+                index={index}
+                option={option}
+                style={itemStyle}
+                textStyle={itemTextStyle}
+                secondaryTextStyle={secondaryTextStyle}
+                height={itemHeight}
+                currentScrollIndex={currentScrollIndex}
+                scaleFunction={scaleFunction}
+                rotationFunction={rotationFunction}
+                opacityFunction={opacityFunction}
+                visibleRest={visibleRest}
+              />
+            )}
+          </>
         )}
       />
     </View>
