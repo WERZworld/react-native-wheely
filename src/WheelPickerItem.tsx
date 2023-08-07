@@ -8,6 +8,7 @@ interface ItemProps {
   style: StyleProp<ViewStyle>;
   option: string | null;
   height: number;
+  maxIdx?: number;
   index: number;
   currentScrollIndex: Animated.AnimatedAddition;
   visibleRest: number;
@@ -27,8 +28,10 @@ const WheelPickerItem: React.FC<ItemProps> = ({
   opacityFunction,
   rotationFunction,
   scaleFunction,
+  maxIdx,
   secondaryTextStyle,
 }) => {
+  if (typeof maxIdx === 'number' && index > maxIdx) return <></>;
   const relativeScrollIndex = Animated.subtract(index, currentScrollIndex);
 
   const translateY = relativeScrollIndex.interpolate({
