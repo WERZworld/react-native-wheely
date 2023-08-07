@@ -23,7 +23,7 @@ interface Props {
   secondaryTextStyle?: TextStyle;
   itemStyle?: ViewStyle;
   itemHeight?: number;
-  maxIdx?: number;
+  maxIdx: number;
   containerStyle?: ViewStyle;
   containerProps?: Omit<ViewProps, 'style'>;
   scaleFunction?: (x: number) => number;
@@ -153,23 +153,25 @@ const WheelPicker: React.FC<Props> = ({
         })}
         data={paddedOptions}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item: option, index }) => (
-          <WheelPickerItem
-            key={`option-${index}`}
-            index={index}
-            option={option}
-            maxIdx={maxIdx}
-            style={itemStyle}
-            textStyle={itemTextStyle}
-            secondaryTextStyle={secondaryTextStyle}
-            height={itemHeight}
-            currentScrollIndex={currentScrollIndex}
-            scaleFunction={scaleFunction}
-            rotationFunction={rotationFunction}
-            opacityFunction={opacityFunction}
-            visibleRest={visibleRest}
-          />
-        )}
+        renderItem={({ item: option, index }) => {
+          if (index > maxIdx) return <></>;
+          return (
+            <WheelPickerItem
+              key={`option-${index}`}
+              index={index}
+              option={option}
+              style={itemStyle}
+              textStyle={itemTextStyle}
+              secondaryTextStyle={secondaryTextStyle}
+              height={itemHeight}
+              currentScrollIndex={currentScrollIndex}
+              scaleFunction={scaleFunction}
+              rotationFunction={rotationFunction}
+              opacityFunction={opacityFunction}
+              visibleRest={visibleRest}
+            />
+          )
+        }}
       />
     </View>
   );
