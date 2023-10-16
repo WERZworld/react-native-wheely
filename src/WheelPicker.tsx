@@ -29,7 +29,6 @@ interface Props {
   rotationFunction?: (x: number) => number;
   opacityFunction?: (x: number) => number;
   visibleRest?: number;
-  maxIndex: number;
   decelerationRate?: 'normal' | 'fast' | number;
   flatListProps?: Omit<FlatListProps<string | null>, 'data' | 'renderItem'>;
 }
@@ -44,7 +43,6 @@ const WheelPicker: React.FC<Props> = ({
   itemTextStyle = {},
   secondaryTextStyle = {},
   itemHeight = 40,
-  maxIndex,
   scaleFunction = (x: number) => 1.0 ** x,
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
   opacityFunction = (x: number) => Math.pow(1 / 3, x),
@@ -83,7 +81,7 @@ const WheelPicker: React.FC<Props> = ({
     // the offset might be negative or over the last item.
     // We therefore clamp the offset to the supported range.
     const offsetY = Math.min(
-      itemHeight * (maxIndex - 1),
+      itemHeight * (options.length - 1),
       Math.max(event.nativeEvent.contentOffset.y, 0),
     );
 
@@ -91,7 +89,7 @@ const WheelPicker: React.FC<Props> = ({
     const last = Math.floor(offsetY % itemHeight);
     if (last > itemHeight / 2) index++;
 
-    if (index !== selectedIndex && index <= maxIndex) {
+    if (index !== selectedIndex) {
       onChange(index);
     }
   };
