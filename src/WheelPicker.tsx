@@ -23,6 +23,7 @@ interface Props {
   secondaryTextStyle?: TextStyle;
   itemStyle?: ViewStyle;
   itemHeight?: number;
+  maxIndex?: number;
   containerStyle?: ViewStyle;
   containerProps?: Omit<ViewProps, 'style'>;
   scaleFunction?: (x: number) => number;
@@ -43,6 +44,7 @@ const WheelPicker: React.FC<Props> = ({
   itemTextStyle = {},
   secondaryTextStyle = {},
   itemHeight = 40,
+  maxIndex,
   scaleFunction = (x: number) => 1.0 ** x,
   rotationFunction = (x: number) => 1 - Math.pow(1 / 2, x),
   opacityFunction = (x: number) => Math.pow(1 / 3, x),
@@ -113,7 +115,13 @@ const WheelPicker: React.FC<Props> = ({
       index: selectedIndex,
       animated: false,
     });
-  }, [selectedIndex]);
+    if (maxIndex && selectedIndex >= maxIndex) {
+      flatListRef.current?.scrollToIndex({
+        index: maxIndex - 1,
+      });
+      onChange(maxIndex - 1);
+    }
+  }, [selectedIndex, maxIndex, onChange]);
 
   return (
     <View
