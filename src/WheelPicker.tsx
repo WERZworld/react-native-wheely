@@ -115,12 +115,6 @@ const WheelPicker: React.FC<Props> = ({
       index: selectedIndex,
       animated: false,
     });
-    if (maxIndex && selectedIndex >= maxIndex) {
-      flatListRef.current?.scrollToIndex({
-        index: maxIndex - 1,
-      });
-      onChange(maxIndex - 1);
-    }
   }, [selectedIndex, maxIndex, onChange]);
 
   return (
