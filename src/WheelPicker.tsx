@@ -83,7 +83,7 @@ const WheelPicker: React.FC<Props> = ({
     // the offset might be negative or over the last item.
     // We therefore clamp the offset to the supported range.
     const offsetY = Math.min(
-      itemHeight * (options.length - 1),
+      itemHeight * (maxIndex - 1),
       Math.max(event.nativeEvent.contentOffset.y, 0),
     );
 
